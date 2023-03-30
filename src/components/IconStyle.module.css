@@ -1,0 +1,6 @@
+@import "../constants.css";
+
+.iconSize {
+    font-size: 20px;
+    color: var(--neutral-600-color);
+}

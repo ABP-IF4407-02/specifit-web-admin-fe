@@ -1,0 +1,12 @@
+.pageContainer {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4em;
+}
+
+.logoImage {
+    width: 230px;
+    margin-bottom: 50px;
+}

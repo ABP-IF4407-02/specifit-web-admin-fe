@@ -1,0 +1,15 @@
+.pageContent {
+  grid-area: content;
+  padding: 2rem;
+}
+
+.dashboardContainer {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-areas: "sidebar content";
+}
+
+.dashboardContent {
+  display: flex;
+  gap: 20px;
+}

@@ -2,6 +2,8 @@ import Sidebar from "../../components/SideBar";
 import TopBar from "../../components/TopBar";
 import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import classes from "./Dashboard.module.css";
+import NavCard from "../../components/NavCard";
 
 function Dashboard() {
   const location = useLocation();
@@ -10,16 +12,16 @@ function Dashboard() {
   useEffect(() => {
     switch (location.pathname) {
       case "/dashboard":
-        setPageTitle("Dashboard");
+        setPageTitle("Admin Dashboard");
         break;
       case "/dashboard/tips":
         setPageTitle("Tips");
         break;
       case "/dashboard/workout":
-        setPageTitle("Workout");
+        setPageTitle("Olahraga");
         break;
       case "/dashboard/program":
-        setPageTitle("Program");
+        setPageTitle("Program Olahraga");
         break;
       default:
         setPageTitle("Page Not Found");
@@ -30,19 +32,36 @@ function Dashboard() {
   const showNavCard = location.pathname === "/dashboard";
 
   return (
-    <div className="dashboard-container">
+    <div className={classes.dashboardContainer}>
       <Sidebar />
-      <div className="content">
+      <div className={classes.pageContent}>
         <TopBar pageTitle={pageTitle} />
         {showNavCard && (
-          <div className="nav-card">
-            <div className="card-item">
-              <h2>Total Programs</h2>
-              <p>10</p>
-            </div>
+          <div className={classes.dashboardContent}>
+            <NavCard
+              link="/dashboard/program"
+              iconName="barbel"
+              name="Program Olahraga"
+              count="10"
+              desc="Total olahraga"
+            />
+            <NavCard
+              link="/dashboard/workout"
+              iconName="barbel"
+              name="Olahraga"
+              count="10"
+              desc="Total program olahraga"
+            />
+            <NavCard
+              link="/dashboard/tips"
+              iconName="tips"
+              name="Tips"
+              count="23"
+              desc="Total jumlah tips"
+            />
           </div>
         )}
-        <div className="main-content">
+        <div className={classes.mainContent}>
           <Outlet />
         </div>
       </div>

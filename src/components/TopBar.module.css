@@ -1,0 +1,32 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pageTitle {
+  font-family: "Open Sans";
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.logoutBtn {
+  background-color: white;
+  border: 1px solid var(--neutral-400-color);
+  color: #2b2b2b;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100px;
+  height: 30px;
+  font-family: "Open Sans";
+  font-weight: 500;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.logoutBtn:hover {
+  background-color: var(--neutral-600-color);
+}

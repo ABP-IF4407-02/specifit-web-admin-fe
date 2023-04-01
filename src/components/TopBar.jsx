@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
+import classes from "./TopBar.module.css";
 
 function TopBar({ pageTitle }) {
   const authCtx = useContext(AuthContext);
@@ -12,9 +13,9 @@ function TopBar({ pageTitle }) {
   }
 
   return (
-    <div className="top-bar">
-      <h1>{pageTitle}</h1>
-      <button className="logout-btn" onClick={onLogoutHandler}>
+    <div className={classes.topBar}>
+      <h1 className={classes.pageTitle}>{pageTitle}</h1>
+      <button className={classes.logoutBtn} onClick={onLogoutHandler}>
         Logout
       </button>
     </div>

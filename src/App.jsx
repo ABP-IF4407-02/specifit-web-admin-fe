@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import AuthContext from "../store/auth-context";
-import LoginPage from "../src/pages/LoginPage";
+import LoginPage from "./pages/auth/LoginPage";
 import { Navigate } from "react-router-dom";
 import { TailSpin } from "react-loader-spinner";
 import classes from "./components/Loading.module.css";

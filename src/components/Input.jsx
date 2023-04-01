@@ -4,7 +4,7 @@ import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 import classes from "./Input.module.css";
 import iconstyle from "./IconStyle.module.css";
 
-function Input({ type, id, name, placeholder, isPassword }) {
+function Input({ type, id, name, placeholder, isPassword, onChange }) {
   const [showPassword, setShowPassword] = useState(false);
 
   function handleTogglePassword() {
@@ -26,6 +26,7 @@ function Input({ type, id, name, placeholder, isPassword }) {
         name={name}
         required
         placeholder={placeholder}
+        onChange={onChange}
       ></input>
       {isPassword && (
         <button

@@ -1,11 +1,24 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
+
 function TopBar({ pageTitle }) {
-    return (
-      <div className="top-bar">
-        <h1>{pageTitle}</h1>
-        <button className="logout-btn">Logout</button>
-      </div>
-    );
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  function onLogoutHandler() {
+    authCtx.logout();
+    navigate("/");
   }
-  
-  export default TopBar;
-  
+
+  return (
+    <div className="top-bar">
+      <h1>{pageTitle}</h1>
+      <button className="logout-btn" onClick={onLogoutHandler}>
+        Logout
+      </button>
+    </div>
+  );
+}
+
+export default TopBar;

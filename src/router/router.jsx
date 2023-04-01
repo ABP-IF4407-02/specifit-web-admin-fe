@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import { createBrowserRouter, Route, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../App";
-import ProgramPage from "../pages/dashboard/ProgramPage";
-import TipsPage from "../pages/dashboard/TipsPage";
-import WorkoutPage from "../pages/dashboard/WorkoutPage";
+import ProgramPage from "../pages/dashboard/program/ProgramPage";
+import TipsPage from "../pages/dashboard/tips/TipsPage";
+import WorkoutPage from "../pages/dashboard/workout/WorkoutPage";
 import Dashboard from "../pages/dashboard/Dashboard";
 import AuthContext from "../../store/auth-context";
+import TipsForm from "../components/TipsForm";
 
 function PrivateRoute({ element }) {
   const { isLoggedIn } = useContext(AuthContext);
@@ -26,12 +27,20 @@ export const router = createBrowserRouter([
         element: <PrivateRoute element={<TipsPage />} />,
       },
       {
+        path: "tips/:id",
+        element: <PrivateRoute element={<TipsForm />} />,
+      },
+      {
         path: "program",
         element: <PrivateRoute element={<ProgramPage />} />,
       },
       {
         path: "workout",
         element: <PrivateRoute element={<WorkoutPage />} />,
+      },
+      {
+        path: "*",
+        element: <Navigate to="/" replace />,
       },
     ],
   },

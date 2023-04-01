@@ -19,8 +19,8 @@
   display: inline-block;
   cursor: pointer;
   border-radius: 4px;
-  width: 100px;
-  height: 30px;
+  width: 120px;
+  height: 36px;
   font-family: "Open Sans";
   font-weight: 500;
   font-size: 16px;
@@ -28,5 +28,6 @@
 }
 
 .logoutBtn:hover {
-  background-color: var(--neutral-600-color);
+  background-color: #2b2b2b;
+  color: white;
 }

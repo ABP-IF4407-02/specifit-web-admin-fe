@@ -1,0 +1,89 @@
+.formCard {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.preview {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+label {
+  margin-bottom: 10px;
+  font-family: "Open Sans";
+  font-size: 16px;
+  font-weight: 600;
+}
+
+input,
+textarea {
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  background-color: #f5f5f5;
+  font-size: 16px;
+  font-family: "Open Sans";
+}
+
+textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.dropzone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  border: 2px dashed #aaa;
+  border-radius: 4px;
+  font-family: "Open Sans";
+  cursor: pointer;
+}
+
+.dropzone p {
+  margin: 0;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.dropzone.active {
+  border-color: #6c63ff;
+}
+
+.dropzone.accept {
+  border-color: #00bfa5;
+}
+
+.dropzone.reject {
+  border-color: #ff1744;
+}
+
+.submitBtn {
+  border: none;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  padding: 10px 60px;
+  border-radius: 20px;
+  font-family: "Open Sans";
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.submitBtn:hover {
+  background-color: rgb(255, 168, 97);
+}

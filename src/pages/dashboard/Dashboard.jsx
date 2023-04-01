@@ -10,22 +10,19 @@ function Dashboard() {
   const [pageTitle, setPageTitle] = useState("");
 
   useEffect(() => {
-    switch (location.pathname) {
-      case "/dashboard":
-        setPageTitle("Admin Dashboard");
-        break;
-      case "/dashboard/tips":
-        setPageTitle("Tips");
-        break;
-      case "/dashboard/workout":
-        setPageTitle("Olahraga");
-        break;
-      case "/dashboard/program":
-        setPageTitle("Program Olahraga");
-        break;
-      default:
-        setPageTitle("Page Not Found");
-        break;
+    const path = location.pathname;
+    if (path === "/dashboard") {
+      setPageTitle("Admin Dashboard");
+    } else if (path === "/dashboard/tips") {
+      setPageTitle("Tips");
+    } else if (path === "/dashboard/workout") {
+      setPageTitle("Olahraga");
+    } else if (path === "/dashboard/program") {
+      setPageTitle("Program Olahraga");
+    } else if (/^\/dashboard\/tips\/\d+$/.test(path)) {
+      setPageTitle("Edit Tips");
+    } else {
+      setPageTitle("Page Not Found");
     }
   }, [location]);
 

@@ -21,6 +21,8 @@ function Dashboard() {
       setPageTitle("Program Olahraga");
     } else if (/^\/dashboard\/tips\/\d+$/.test(path)) {
       setPageTitle("Edit Tips");
+    } else if (path === "/dashboard/tips/create") {
+      setPageTitle("Create Tips");
     } else {
       setPageTitle("Page Not Found");
     }

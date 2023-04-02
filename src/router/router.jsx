@@ -6,7 +6,8 @@ import TipsPage from "../pages/dashboard/tips/TipsPage";
 import WorkoutPage from "../pages/dashboard/workout/WorkoutPage";
 import Dashboard from "../pages/dashboard/Dashboard";
 import AuthContext from "../../store/auth-context";
-import TipsForm from "../components/TipsForm";
+import EditTips from "../pages/dashboard/tips/EditTips";
+import CreateTips from "../pages/dashboard/tips/CreateTips";
 
 function PrivateRoute({ element }) {
   const { isLoggedIn } = useContext(AuthContext);
@@ -28,7 +29,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "tips/:id",
-        element: <PrivateRoute element={<TipsForm />} />,
+        element: <PrivateRoute element={<EditTips />} />,
+      },
+      {
+        path: "tips/create",
+        element: <PrivateRoute element={<CreateTips />} />,
       },
       {
         path: "program",

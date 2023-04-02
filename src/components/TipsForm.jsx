@@ -1,35 +1,38 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { TailSpin } from "react-loader-spinner";
-import { tipsCards } from "../../dummy_data/tips";
-import styles from "../components/Loading.module.css";
+import { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
 import classes from "./TipsForm.module.css";
+import { tipsCards } from "../../dummy_data/tips";
+import LoadingSpinner from "./LoadingSpinner";
 
-function TipsForm() {
-  const { id } = useParams();
-
-  /*
-  useEffect(() => {
-    async function fetchTipsData() {
-      try {
-        const response = await fetch(`/api/tips/${id}`);
-        const data = await response.json();
-        setTipsData(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchTipsData();
-  }, [id]);
-  */
-
+function TipsForm({ id }) {
   const [formData, setFormData] = useState({
     title: "",
     author: "",
     article: "",
     image: null,
   });
+
+  // Sementara
+  useEffect(() => {
+    if (id) {
+      setFormData(tipsCards.find((tips) => tips.id === parseInt(id)));
+    }
+  }, []);
+
+  /*
+    useEffect(() => {
+      async function fetchTipsData() {
+        try {
+          const response = await fetch(`/api/tips/${id}`);
+          const data = await response.json();
+          setTipsData(data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchTipsData();
+    }, [id]);
+    */
 
   const [imagePreview, setImagePreview] = useState("");
 
@@ -46,28 +49,16 @@ function TipsForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
+
+    if (id) {
+      // Update
+    } else {
+      // Create
+    }
   };
 
-  // Sementara
-  useEffect(() => {
-    setFormData(tipsCards.find((tips) => tips.id === parseInt(id)));
-  }, []);
-
   if (!formData) {
-    return (
-      <div className={styles.loadingCircleContainer}>
-        <TailSpin
-          height="80"
-          width="80"
-          color="#FF810D"
-          ariaLabel="tail-spin-loading"
-          radius="1"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (

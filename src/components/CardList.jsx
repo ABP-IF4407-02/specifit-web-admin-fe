@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FiSearch, FiPlus, FiChevronRight } from "react-icons/fi";
 import classes from "./CardList.module.css";
 import { Link } from "react-router-dom";
@@ -8,6 +9,12 @@ function CardList({ cards }) {
   const filteredCards = cards.filter((card) =>
     card.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const navigate = useNavigate();
+
+  function onCreateHandler() {
+    navigate("/dashboard/tips/create");
+  }
 
   return (
     <div className={classes.cardList}>
@@ -30,11 +37,7 @@ function CardList({ cards }) {
       </div>
       <div className={classes.cardContainer}>
         {filteredCards.map((card) => (
-          <Link
-            to={`${card.id}`}
-            key={card.id}
-            className={classes.cardLink}
-          >
+          <Link to={`${card.id}`} key={card.id} className={classes.cardLink}>
             <div className={classes.card} key={card.id}>
               <div className={classes.cardContent}>
                 <div className={classes.title}>{card.title}</div>
@@ -48,7 +51,7 @@ function CardList({ cards }) {
         ))}
       </div>
       <div className={classes.buttonContainer}>
-        <button className={classes.addButton}>
+        <button className={classes.addButton} onClick={onCreateHandler}>
           <FiPlus className={classes.addIcon} />
           Tambah Tips
         </button>

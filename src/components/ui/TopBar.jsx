@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
+import AuthContext from "../../../store/auth-context";
 import classes from "./TopBar.module.css";
 
 function TopBar({ pageTitle }) {

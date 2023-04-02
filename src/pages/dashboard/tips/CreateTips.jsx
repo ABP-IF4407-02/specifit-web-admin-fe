@@ -1,4 +1,4 @@
-import TipsForm from "../../../components/TipsForm";
+import TipsForm from "../../../components/tips/TipsForm";
 
 function CreateTips() {
   return <TipsForm />;

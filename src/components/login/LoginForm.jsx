@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import classes from "./LoginForm.module.css";
-import AuthContext from "../../store/auth-context";
+import AuthContext from "../../../store/auth-context";
 import Cookies from "js-cookie";
 
 function LoginForm() {

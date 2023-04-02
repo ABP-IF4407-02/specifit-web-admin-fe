@@ -1,4 +1,4 @@
-import LoginForm from "../../components/LoginForm";
+import LoginForm from "../../components/login/LoginForm";
 import classes from "./LoginPage.module.css";
 import specifitLogo from "../../assets/specifit-logo-login.png"
 

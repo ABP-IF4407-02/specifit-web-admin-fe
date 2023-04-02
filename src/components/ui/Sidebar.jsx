@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { IoHome, IoBulb, IoBarbell } from "react-icons/io5";
 import classes from "./Sidebar.module.css";
-import specifitLogo from "../assets/specifit-logo-login.png";
+import specifitLogo from "../../assets/specifit-logo-login.png";
 
 function Sidebar() {
   const location = useLocation();

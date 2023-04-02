@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 import classes from "./Input.module.css";
-import iconstyle from "./IconStyle.module.css";
+import iconstyle from "../ui/IconStyle.module.css";
 
 function Input({ type, id, name, placeholder, isPassword, onChange }) {
   const [showPassword, setShowPassword] = useState(false);

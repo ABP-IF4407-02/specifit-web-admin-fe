@@ -1,9 +1,9 @@
-import Sidebar from "../../components/SideBar";
-import TopBar from "../../components/TopBar";
+import Sidebar from "../../components/ui/SideBar";
+import TopBar from "../../components/ui/TopBar";
 import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import classes from "./Dashboard.module.css";
-import NavCard from "../../components/NavCard";
+import NavCard from "../../components/ui/NavCard";
 
 function Dashboard() {
   const location = useLocation();

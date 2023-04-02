@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiSearch, FiPlus, FiChevronRight } from "react-icons/fi";
-import classes from "./CardList.module.css";
+import classes from "./TipsCardList.module.css";
 import { Link } from "react-router-dom";
 
-function CardList({ cards }) {
+function TipsCardList({ cards }) {
   const [searchTerm, setSearchTerm] = useState("");
   const filteredCards = cards.filter((card) =>
     card.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -60,4 +60,4 @@ function CardList({ cards }) {
   );
 }
 
-export default CardList;
+export default TipsCardList;

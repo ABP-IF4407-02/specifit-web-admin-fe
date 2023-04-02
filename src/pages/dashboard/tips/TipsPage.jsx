@@ -1,4 +1,4 @@
-import CardList from "../../../components/CardList";
+import CardList from "../../../components/tips/TipsCardList";
 import { tipsCards } from "../../../../dummy_data/tips";
 
 function TipsPage() {

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
 import classes from "./TipsForm.module.css";
-import { tipsCards } from "../../dummy_data/tips";
-import LoadingSpinner from "./LoadingSpinner";
+import { tipsCards } from "../../../dummy_data/tips";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 function TipsForm({ id }) {
   const [formData, setFormData] = useState({

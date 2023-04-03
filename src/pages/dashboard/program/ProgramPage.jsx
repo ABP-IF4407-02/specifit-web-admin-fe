@@ -1,5 +1,8 @@
+import { programCards } from "../../../../dummy_data/program";
+import ProgramCardList from "../../../components/program/ProgramCardList";
+
 function ProgramPage() {
-    return <h1>Ini di Program Page</h1>;
+  return <ProgramCardList cards={programCards} />;
 }
 
 export default ProgramPage;

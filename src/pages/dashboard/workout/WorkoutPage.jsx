@@ -1,5 +1,8 @@
+import { workoutCards } from "../../../../dummy_data/workout";
+import WorkoutCardList from "../../../components/workout/WorkoutCardList";
+
 function WorkoutPage() {
-    return <h1>Ini di workout page lah?</h1>
+  return <WorkoutCardList cards={workoutCards} />;
 }
 
 export default WorkoutPage;

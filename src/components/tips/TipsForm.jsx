@@ -36,17 +36,17 @@ function TipsForm({ id }) {
 
   const [imagePreview, setImagePreview] = useState("");
 
-  const handleInputChange = (event) => {
+  function handleInputChange(event) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleImageDrop = (files) => {
+  function handleImageDrop(files) {
     setFormData({ ...formData, image: files[0] });
     setImagePreview(URL.createObjectURL(files[0]));
   };
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
     console.log(formData);
 

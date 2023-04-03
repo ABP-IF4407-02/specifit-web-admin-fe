@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiSearch, FiPlus, FiChevronRight } from "react-icons/fi";
+import { FiChevronRight } from "react-icons/fi";
+import { IoSearch, IoAddCircle } from "react-icons/io5";
 import classes from "./WorkoutCardList.module.css";
 import { Link } from "react-router-dom";
 
@@ -21,7 +22,7 @@ function WorkoutCardList({ cards }) {
       <div className={classes.topContent}>
         <div className={classes.searchBar}>
           <div className={classes.searchIcon}>
-            <FiSearch />
+            <IoSearch />
           </div>
           <input
             className={classes.searchInput}
@@ -57,7 +58,7 @@ function WorkoutCardList({ cards }) {
       </div>
       <div className={classes.buttonContainer}>
         <button className={classes.addButton} onClick={onCreateHandler}>
-          <FiPlus className={classes.addIcon} />
+          <IoAddCircle className={classes.addIcon} size={20} />
           Tambah Olahraga
         </button>
       </div>

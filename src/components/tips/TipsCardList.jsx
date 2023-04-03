@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiSearch, FiPlus, FiChevronRight } from "react-icons/fi";
+import { FiChevronRight } from "react-icons/fi";
+import { IoSearch, IoAddCircle } from "react-icons/io5";
 import classes from "./TipsCardList.module.css";
 import { Link } from "react-router-dom";
 
@@ -21,7 +22,7 @@ function TipsCardList({ cards }) {
       <div className={classes.topContent}>
         <div className={classes.searchBar}>
           <div className={classes.searchIcon}>
-            <FiSearch />
+            <IoSearch />
           </div>
           <input
             className={classes.searchInput}
@@ -44,7 +45,7 @@ function TipsCardList({ cards }) {
                 <div className={classes.description}>{card.author}</div>
               </div>
               <div className={classes.cardAction}>
-                <FiChevronRight />
+                <FiChevronRight style={{ color: "#2b2b2b" }} />
               </div>
             </div>
           </Link>
@@ -52,7 +53,7 @@ function TipsCardList({ cards }) {
       </div>
       <div className={classes.buttonContainer}>
         <button className={classes.addButton} onClick={onCreateHandler}>
-          <FiPlus className={classes.addIcon} />
+          <IoAddCircle className={classes.addIcon} size={20} />
           Tambah Tips
         </button>
       </div>

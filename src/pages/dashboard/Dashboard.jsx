@@ -46,14 +46,14 @@ function Dashboard() {
               iconName="barbel"
               name="Program Olahraga"
               count="10"
-              desc="Total olahraga"
+              desc="Total program olahraga"
             />
             <NavCard
               link="/dashboard/workout"
               iconName="barbel"
               name="Olahraga"
               count="10"
-              desc="Total program olahraga"
+              desc="Total olahraga"
             />
             <NavCard
               link="/dashboard/tips"

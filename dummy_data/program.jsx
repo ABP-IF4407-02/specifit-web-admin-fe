@@ -5,7 +5,10 @@ export const programCards = [
     desc: "Ini deskripsi",
     img: "https://example.com",
     title: "Penghilang Menbubs",
-    workouts: ["1, 2", "3, 4"],
+    workouts: [
+      [1, 2],
+      [3, 4],
+    ],
   },
   {
     id: 2,
@@ -13,7 +16,10 @@ export const programCards = [
     desc: "Ini deskripsi",
     img: "https://example.com",
     title: "Penghilang Menbubs 2",
-    workouts: ["1, 2", "3, 4"],
+    workouts: [
+      [1, 2],
+      [3, 4],
+    ],
   },
   {
     id: 3,
@@ -21,6 +27,9 @@ export const programCards = [
     desc: "Ini deskripsi",
     img: "https://example.com",
     title: "Penghilang Menbubs 3",
-    workouts: ["1, 2", "3, 4"],
+    workouts: [
+      [1, 2],
+      [3, 4],
+    ],
   },
 ];

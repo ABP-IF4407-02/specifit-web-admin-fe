@@ -27,6 +27,10 @@ function Dashboard() {
       setPageTitle("Edit Olahraga");
     } else if (path === "/dashboard/workout/create") {
       setPageTitle("Create Workout");
+    } else if (/^\/dashboard\/program\/\d+$/.test(path)) {
+      setPageTitle("Edit Program");
+    } else if (path === "/dashboard/program/create") {
+      setPageTitle("Create Program");
     } else {
       setPageTitle("Page Not Found");
     }

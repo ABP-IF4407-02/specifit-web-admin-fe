@@ -35,4 +35,16 @@ export const workoutCards = [
     workoutEsts: ["1 menit", "2 menit"],
     workoutLists: ["Push Up", "Pull Up"],
   },
+  {
+    id: 4,
+    ctgList: ["> 10 menit", "Cardio"],
+    desc: "This is a workout description",
+    est: "30 menit",
+    img: "https://example.com/workout.jpg",
+    title: "Another not Awesome Workout",
+    totalEst: "120 menit",
+    vid: "https://example.com/workout.mp4",
+    workoutEsts: ["1 menit", "2 menit"],
+    workoutLists: ["Push Up", "Pull Up"],
+  },
 ];

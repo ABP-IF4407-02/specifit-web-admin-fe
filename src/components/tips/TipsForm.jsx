@@ -3,8 +3,11 @@ import Dropzone from "react-dropzone";
 import classes from "./TipsForm.module.css";
 import { tipsCards } from "../../../dummy_data/tips";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
+import { IoTrash } from "react-icons/io5"
 
 function TipsForm({ id }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -39,12 +42,12 @@ function TipsForm({ id }) {
   function handleInputChange(event) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-  };
+  }
 
   function handleImageDrop(files) {
     setFormData({ ...formData, image: files[0] });
     setImagePreview(URL.createObjectURL(files[0]));
-  };
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -55,7 +58,14 @@ function TipsForm({ id }) {
     } else {
       // Create
     }
-  };
+  }
+
+  function handleDeleteProgram() {
+    // Delete
+
+    // Navigate to home
+    navigate("/dashboard");
+  }
 
   if (!formData) {
     return <LoadingSpinner />;
@@ -120,9 +130,19 @@ function TipsForm({ id }) {
             )}
           </Dropzone>
         </div>
-        <button className={classes.submitBtn} type="submit">
-          Submit
-        </button>
+        <div className={classes.submitGroup}>
+          <button className={classes.submitBtn} type="submit">
+            Submit
+          </button>
+          <button
+            className={classes.deleteBtn}
+            type="button"
+            onClick={handleDeleteProgram}
+          >
+            <IoTrash className={classes.removeIcon} size={16} />
+            Delete
+          </button>
+        </div>
       </form>
     </div>
   );

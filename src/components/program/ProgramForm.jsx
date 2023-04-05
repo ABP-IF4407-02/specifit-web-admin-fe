@@ -5,9 +5,11 @@ import { programCards } from "../../../dummy_data/program";
 import { workoutCards } from "../../../dummy_data/workout";
 import { IoTrash, IoAddCircle } from "react-icons/io5";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 function ProgramForm({ id }) {
   const [dayCount, setDayCount] = useState(0);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     ctgList: [[]],
@@ -95,6 +97,13 @@ function ProgramForm({ id }) {
     });
   }
 
+  function handleDeleteProgram() {
+    // Delete
+
+    // Navigate to home
+    navigate("/dashboard");
+  }
+
   if (!formData) {
     return <LoadingSpinner />;
   }
@@ -135,7 +144,11 @@ function ProgramForm({ id }) {
                   onClick={() => handleRemoveDay(dayIndex)}
                   className={classes.removeDayBtn}
                 >
-                  <IoTrash className={classes.removeIcon} size={16} style={{paddingLeft: 8}}/>
+                  <IoTrash
+                    className={classes.removeIcon}
+                    size={16}
+                    style={{ paddingLeft: 8 }}
+                  />
                 </button>
               )}
             </div>
@@ -233,9 +246,15 @@ function ProgramForm({ id }) {
             )}
           </Dropzone>
         </div>
-        <button className={classes.submitBtn} type="submit">
-          Submit
-        </button>
+        <div className={classes.submitGroup}>
+          <button className={classes.submitBtn} type="submit">
+            Submit
+          </button>
+          <button className={classes.deleteBtn} type="button" onClick={handleDeleteProgram}>
+            <IoTrash className={classes.removeIcon} size={16} />
+            Delete
+          </button>
+        </div>
       </form>
     </div>
   );

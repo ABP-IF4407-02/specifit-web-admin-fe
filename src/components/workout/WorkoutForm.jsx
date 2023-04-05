@@ -4,8 +4,10 @@ import classes from "./WorkoutForm.module.css";
 import { workoutCards } from "../../../dummy_data/workout";
 import { IoTrash, IoAddCircle } from "react-icons/io5";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 function WorkoutForm({ id }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     ctgList: [],
     desc: "",
@@ -92,6 +94,13 @@ function WorkoutForm({ id }) {
     setFormData({ ...formData, workoutEsts: newEstimateList });
   }
 
+  function handleDeleteProgram() {
+    // Delete
+
+    // Navigate to home
+    navigate("/dashboard");
+  }
+
   if (!formData) {
     return <LoadingSpinner />;
   }
@@ -173,7 +182,7 @@ function WorkoutForm({ id }) {
                 onClick={handleRemoveForm}
                 className={classes.removeFormBtn}
               >
-                <IoTrash className={classes.removeIcon} size={16}/>
+                <IoTrash className={classes.removeIcon} size={16} />
                 Hapus
               </button>
             )}
@@ -186,7 +195,7 @@ function WorkoutForm({ id }) {
             className={classes.addFormBtn}
             onClick={handleAddForm}
           >
-            <IoAddCircle className={classes.addIcon} size={24}/>
+            <IoAddCircle className={classes.addIcon} size={24} />
             Tambah Lagi
           </button>
         </div>
@@ -226,9 +235,19 @@ function WorkoutForm({ id }) {
             )}
           </Dropzone>
         </div>
-        <button className={classes.submitBtn} type="submit">
-          Submit
-        </button>
+        <div className={classes.submitGroup}>
+          <button className={classes.submitBtn} type="submit">
+            Submit
+          </button>
+          <button
+            className={classes.deleteBtn}
+            type="button"
+            onClick={handleDeleteProgram}
+          >
+            <IoTrash className={classes.removeIcon} size={16} />
+            Delete
+          </button>
+        </div>
       </form>
     </div>
   );

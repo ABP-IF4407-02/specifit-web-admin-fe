@@ -87,3 +87,26 @@ textarea {
 .submitBtn:hover {
   background-color: rgb(255, 168, 97);
 }
+
+.deleteBtn {
+  border: 1px solid var(--primary-color);
+  background-color: white;
+  color: var(--primary-color);
+  padding: 10px 60px;
+  border-radius: 20px;
+  font-family: "Open Sans";
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submitGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

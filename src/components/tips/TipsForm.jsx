@@ -60,7 +60,7 @@ function TipsForm({ id }) {
     }
   }
 
-  function handleDeleteProgram() {
+  function handleDeleteTips() {
     // Delete
 
     // Navigate to home
@@ -134,14 +134,14 @@ function TipsForm({ id }) {
           <button className={classes.submitBtn} type="submit">
             Submit
           </button>
-          <button
+          {id && <button
             className={classes.deleteBtn}
             type="button"
-            onClick={handleDeleteProgram}
+            onClick={handleDeleteTips}
           >
             <IoTrash className={classes.removeIcon} size={16} />
             Delete
-          </button>
+          </button>}
         </div>
       </form>
     </div>

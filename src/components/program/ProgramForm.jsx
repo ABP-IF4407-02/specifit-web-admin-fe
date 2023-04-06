@@ -250,10 +250,16 @@ function ProgramForm({ id }) {
           <button className={classes.submitBtn} type="submit">
             Submit
           </button>
-          <button className={classes.deleteBtn} type="button" onClick={handleDeleteProgram}>
-            <IoTrash className={classes.removeIcon} size={16} />
-            Delete
-          </button>
+          {id && (
+            <button
+              className={classes.deleteBtn}
+              type="button"
+              onClick={handleDeleteProgram}
+            >
+              <IoTrash className={classes.removeIcon} size={16} />
+              Delete
+            </button>
+          )}
         </div>
       </form>
     </div>

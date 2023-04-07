@@ -1,43 +1,113 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Dropzone from "react-dropzone";
 import classes from "./TipsForm.module.css";
-import { tipsCards } from "../../../dummy_data/tips";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
-import { IoTrash } from "react-icons/io5"
+import { IoTrash } from "react-icons/io5";
+import AuthContext from "../../../store/auth-context";
+import axios from "axios";
 
 function TipsForm({ id }) {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
   const [formData, setFormData] = useState({
     title: "",
     author: "",
     article: "",
-    image: null,
+    img: "",
   });
+  const [imagePreview, setImagePreview] = useState("");
 
-  // Sementara
   useEffect(() => {
+    async function getTipsById() {
+      try {
+        const response = await axios.get(
+          `http://178.128.103.166/api/tips/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setFormData(response.data.data);
+        setImagePreview(`http://178.128.103.166/${response.data.data.img}`);
+      } catch (error) {
+        // Handle error
+        console.error(error);
+      }
+    }
     if (id) {
-      setFormData(tipsCards.find((tips) => tips.id === parseInt(id)));
+      getTipsById();
     }
   }, []);
 
-  /*
-    useEffect(() => {
-      async function fetchTipsData() {
-        try {
-          const response = await fetch(`/api/tips/${id}`);
-          const data = await response.json();
-          setTipsData(data);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      fetchTipsData();
-    }, [id]);
-    */
+  function convertFormData(data) {
+    const newData = new FormData();
+    for (let key in data) {
+      newData.append(key, data[key]);
+    }
+    return newData;
+  }
 
-  const [imagePreview, setImagePreview] = useState("");
+  async function createTips(data) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://178.128.103.166/api/tips",
+        data,
+        config
+      );
+      console.log(response.data);
+      alert("Create Tips Berhasil");
+      navigate("/dashboard/tips");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function editTips(data) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.put(
+        `http://178.128.103.166/api/tips/edit/${id}`,
+        data,
+        config
+      );
+      console.log(response.data);
+      alert("Edit Tips Berhasil");
+      navigate("/dashboard/tips");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function deleteTips() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.delete(
+        `http://178.128.103.166/api/tips/edit/${id}`,
+        config
+      );
+      console.log(response.data);
+      alert("Delete Tips Berhasil");
+      navigate("/dashboard/tips");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -45,26 +115,27 @@ function TipsForm({ id }) {
   }
 
   function handleImageDrop(files) {
-    setFormData({ ...formData, image: files[0] });
+    setFormData({ ...formData, img: files[0] });
     setImagePreview(URL.createObjectURL(files[0]));
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
+    const formDataObj = convertFormData(formData);
 
     if (id) {
       // Update
+      editTips(formDataObj);
     } else {
       // Create
+      createTips(formDataObj);
     }
   }
 
   function handleDeleteTips() {
     // Delete
-
-    // Navigate to home
-    navigate("/dashboard");
+    deleteTips();
+    navigate("/dashboard/tips");
   }
 
   if (!formData) {
@@ -134,14 +205,16 @@ function TipsForm({ id }) {
           <button className={classes.submitBtn} type="submit">
             Submit
           </button>
-          {id && <button
-            className={classes.deleteBtn}
-            type="button"
-            onClick={handleDeleteTips}
-          >
-            <IoTrash className={classes.removeIcon} size={16} />
-            Delete
-          </button>}
+          {id && (
+            <button
+              className={classes.deleteBtn}
+              type="button"
+              onClick={handleDeleteTips}
+            >
+              <IoTrash className={classes.removeIcon} size={16} />
+              Delete
+            </button>
+          )}
         </div>
       </form>
     </div>

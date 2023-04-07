@@ -1,33 +1,72 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Dropzone from "react-dropzone";
 import classes from "./WorkoutForm.module.css";
-import { workoutCards } from "../../../dummy_data/workout";
 import { IoTrash, IoAddCircle } from "react-icons/io5";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import AuthContext from "../../../store/auth-context";
 
 function WorkoutForm({ id }) {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
   const [formData, setFormData] = useState({
-    ctgList: [],
+    ctgList: [""],
     desc: "",
-    est: "",
     img: null,
     title: "",
     totalEst: "",
-    vid: "",
-    workoutEsts: [],
-    workoutLists: [],
+    vid: "http://youtube.com",
+    workoutEsts: [""],
+    workoutLists: [""],
   });
 
-  // Sementara
   useEffect(() => {
+    async function getWorkoutById() {
+      try {
+        const response = await axios.get(
+          `http://178.128.103.166/api/workout/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (Array.isArray(response.data.data.workoutLists[0])) {
+          setFormData(parseResponse(response.data.data));
+        } else {
+          setFormData(response.data.data);
+        }
+        console.log(response.data.data.img);
+        setImagePreview(`http://178.128.103.166/${response.data.data.img}`);
+      } catch (error) {
+        // Handle error
+        console.error(error);
+      }
+    }
+
     if (id) {
-      setFormData(workoutCards.find((workout) => workout.id === parseInt(id)));
+      getWorkoutById();
     }
   }, []);
 
   const [imagePreview, setImagePreview] = useState("");
+
+  function parseResponse(data) {
+    const parsedWorkoutLists = data.workoutLists[0];
+    const parsedCtgList = data.ctgList[0];
+    const parsedWorkoutEsts = data.workoutEsts[0];
+
+    const parsedData = {
+      ...data,
+      ["workoutLists"]: parsedWorkoutLists,
+      ["ctgList"]: parsedCtgList,
+      ["workoutEsts"]: parsedWorkoutEsts,
+    };
+
+    return parsedData;
+  }
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -37,17 +76,6 @@ function WorkoutForm({ id }) {
   function handleImageDrop(files) {
     setFormData({ ...formData, img: files[0] });
     setImagePreview(URL.createObjectURL(files[0]));
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log(formData);
-
-    if (id) {
-      // Update
-    } else {
-      // Create
-    }
   }
 
   function handleAddForm() {
@@ -94,11 +122,95 @@ function WorkoutForm({ id }) {
     setFormData({ ...formData, workoutEsts: newEstimateList });
   }
 
+  function convertFormData(data) {
+    const newData = new FormData();
+    for (let key in data) {
+      Array.isArray(data[key])
+        ? data[key].forEach((value) => newData.append(key + "[]", value))
+        : newData.append(key, data[key]);
+    }
+    return newData;
+  }
+
+  async function createWorkout(data) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://178.128.103.166/api/workout",
+        data,
+        config
+      );
+      console.log(response.data);
+
+      alert("Create Workout Berhasil");
+      navigate("/dashboard/workout");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function editWorkout(data) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.put(
+        `http://178.128.103.166/api/workout/edit/${id}`,
+        data,
+        config
+      );
+
+      console.log(response.data);
+      alert("Edit Workout Berhasil");
+      navigate("/dashboard/workout");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function deleteWorkout() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.delete(
+        `http://178.128.103.166/api/workout/${id}`,
+        config
+      );
+      console.log(response.data);
+      alert("Delete Workout Berhasil");
+      navigate("/dashboard/workout");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   function handleDeleteWorkout() {
     // Delete
-
+    deleteWorkout();
     // Navigate to home
-    navigate("/dashboard");
+    navigate("/dashboard/workout");
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formDataObj = convertFormData(formData);
+
+    if (id) {
+      // Update
+      editWorkout(formDataObj);
+    } else {
+      // Create
+      createWorkout(formDataObj);
+    }
   }
 
   if (!formData) {
@@ -239,14 +351,16 @@ function WorkoutForm({ id }) {
           <button className={classes.submitBtn} type="submit">
             Submit
           </button>
-          {id && <button
-            className={classes.deleteBtn}
-            type="button"
-            onClick={handleDeleteWorkout}
-          >
-            <IoTrash className={classes.removeIcon} size={16} />
-            Delete
-          </button>}
+          {id && (
+            <button
+              className={classes.deleteBtn}
+              type="button"
+              onClick={handleDeleteWorkout}
+            >
+              <IoTrash className={classes.removeIcon} size={16} />
+              Delete
+            </button>
+          )}
         </div>
       </form>
     </div>

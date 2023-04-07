@@ -1,34 +1,167 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Dropzone from "react-dropzone";
 import classes from "./ProgramForm.module.css";
-import { programCards } from "../../../dummy_data/program";
-import { workoutCards } from "../../../dummy_data/workout";
 import { IoTrash, IoAddCircle } from "react-icons/io5";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../../store/auth-context";
+import axios from "axios";
 
 function ProgramForm({ id }) {
   const [dayCount, setDayCount] = useState(0);
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
+  const [imagePreview, setImagePreview] = useState("");
   const [formData, setFormData] = useState({
-    ctgList: [[]],
+    ctgList: "",
     desc: "",
-    est: "",
     img: null,
     title: "",
     workouts: [[""]],
   });
 
-  // Sementara
+  const [workoutCards, setWorkoutCards] = useState(null);
+
   useEffect(() => {
+    async function getProgramById() {
+      try {
+        const response = await axios.get(
+          `http://178.128.103.166/api/workoutprogram/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (Array.isArray(response.data.data.workouts[0])) {
+          setFormData(parseResponse(response.data.data));
+          setDayCount(response.data.data.workouts[0].length);
+        } else {
+          setFormData(response.data.data);
+          setDayCount(response.data.data.workouts.length);
+        }
+        setImagePreview(`http://178.128.103.166/${response.data.data.img}`);
+      } catch (error) {
+        // Handle error
+        console.error(error);
+      }
+    }
+
+    async function getWorkouts() {
+      try {
+        const response = await axios.get("http://178.128.103.166/api/workout", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setWorkoutCards(response.data.data.data);
+      } catch (error) {
+        // Handle error
+        console.error(error);
+      }
+    }
+
+    getWorkouts();
+
     if (id) {
-      setFormData(programCards.find((program) => program.id === parseInt(id)));
-      setDayCount(formData.workouts.length);
+      getProgramById();
     }
   }, []);
 
-  const [imagePreview, setImagePreview] = useState("");
+  function parseResponse(data) {
+    const parsedWorkouts = data.workouts[0];
+    const parsedCtgList = data.ctgList[0];
+
+    const parsedData = {
+      ...data,
+      ["workouts"]: parsedWorkouts,
+      ["ctgList"]: parsedCtgList,
+    };
+
+    return parsedData;
+  }
+
+  function convertFormData(data) {
+    const newData = new FormData();
+    for (let key in data) {
+      if (Array.isArray(data[key])) {
+        for (let i = 0; i < data[key].length; i++) {
+          if (Array.isArray(data[key][i])) {
+            // Check if the value is a nested array
+            for (let j = 0; j < data[key][i].length; j++) {
+              newData.append(`${key}[${i}][]`, data[key][i][j]);
+            }
+          } else {
+            newData.append(`${key}[]`, data[key][i]);
+          }
+        }
+      } else {
+        newData.append(key, data[key]);
+      }
+    }
+    return newData;
+  }
+
+  async function createProgram(data) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://178.128.103.166/api/workoutprogram",
+        data,
+        config
+      );
+      console.log(response.data);
+      alert("Create Program Berhasil");
+      navigate("/dashboard/program");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function editProgram(data) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.put(
+        `http://178.128.103.166/api/workoutprogram/edit/${id}`,
+        data,
+        config
+      );
+      console.log(response.data);
+      alert("Edit Program Berhasil");
+      navigate("/dashboard/program");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function deleteProgram() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await axios.delete(
+        `http://178.128.103.166/api/workoutprogram/${id}`,
+        config
+      );
+      console.log(response.data);
+      alert("Delete Program Berhasil");
+      navigate("/dashboard/program");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -42,15 +175,15 @@ function ProgramForm({ id }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    // Add Categories
-
+    const formDataObj = convertFormData(formData);
     console.log(formData);
 
     if (id) {
       // Update
+      editProgram(formDataObj);
     } else {
       // Create
+      createProgram(formDataObj);
     }
   }
 
@@ -99,9 +232,9 @@ function ProgramForm({ id }) {
 
   function handleDeleteProgram() {
     // Delete
-
+    deleteProgram();
     // Navigate to home
-    navigate("/dashboard");
+    navigate("/dashboard/program");
   }
 
   if (!formData) {
@@ -131,6 +264,17 @@ function ProgramForm({ id }) {
             onChange={handleInputChange}
             required
           ></textarea>
+        </div>
+        <div className={classes.formGroup}>
+          <label htmlFor="ctgList">Kategori Program</label>
+          <input
+            type="text"
+            name="ctgList"
+            id="ctgList"
+            value={formData.ctgList}
+            onChange={handleInputChange}
+            required
+          />
         </div>
 
         {/* Dynamic form */}
@@ -169,11 +313,12 @@ function ProgramForm({ id }) {
                     required
                   >
                     <option value="">--Pilih Olahraga--</option>
-                    {workoutCards.map((workout) => (
-                      <option key={workout.id} value={workout.id}>
-                        {workout.id}. {workout.title}
-                      </option>
-                    ))}
+                    {workoutCards &&
+                      workoutCards.map((workout, index) => (
+                        <option key={workout._id} value={workout._id}>
+                          {index}. {workout.title}
+                        </option>
+                      ))}
                   </select>
                   {workoutIndex > 0 && (
                     <button
@@ -210,18 +355,6 @@ function ProgramForm({ id }) {
             </div>
           </div>
         ))}
-
-        <div className={classes.formGroup}>
-          <label htmlFor="est">Total Waktu</label>
-          <input
-            type="text"
-            name="est"
-            id="est"
-            value={formData.est}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
         <div className={classes.formGroup}>
           <label htmlFor="image">Olahraga Thumbnail</label>
           <Dropzone

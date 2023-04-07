@@ -1,12 +1,12 @@
 @import "../../constants.css";
 
 .input {
-  width: 100%;
+  width: 350px;
   border-radius: 8px;
   border: 2px solid var(--neutral-400-color);
   background-color: var(--neutral-200-color);
   box-sizing: border-box;
-  padding: 16px 150px 16px 10px;
+  padding: 16px 0px 16px 10px;
   transition: border-color 0.3s ease-in-out;
 }
 

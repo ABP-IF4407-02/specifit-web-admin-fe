@@ -37,24 +37,28 @@ function ProgramCardList({ cards }) {
         </div>
       </div>
       <div className={classes.cardContainer}>
-        {filteredCards.map((card) => (
-          <Link to={`${card.id}`} key={card.id} className={classes.cardLink}>
-            <div className={classes.card} key={card.id}>
-              <div className={classes.cardContent}>
-                <div className={classes.title}>{card.title}</div>
-                <div className={classes.description}>
-                  {card.ctgList.join(", ")}
+        {filteredCards.length > 0 ? (
+          filteredCards.map((card) => (
+            <Link to={`${card._id}`} key={card._id} className={classes.cardLink}>
+              <div className={classes.card} key={card._id}>
+                <div className={classes.cardContent}>
+                  <div className={classes.title}>{card.title}</div>
+                  <div className={classes.description}>
+                    {card.ctgList.join(", ")}
+                  </div>
+                  <div
+                    className={classes.other}
+                  >{`${card.workouts.length} Hari`}</div>
                 </div>
-                <div
-                  className={classes.other}
-                >{`${card.workouts.length} Hari`}</div>
+                <div className={classes.cardAction}>
+                  <FiChevronRight style={{ color: "#2b2b2b" }} />
+                </div>
               </div>
-              <div className={classes.cardAction}>
-                <FiChevronRight style={{ color: "#2b2b2b" }} />
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))
+        ) : (
+          <p className={classes.description}>Belum ada Program</p>
+        )}
       </div>
       <div className={classes.buttonContainer}>
         <button className={classes.addButton} onClick={onCreateHandler}>

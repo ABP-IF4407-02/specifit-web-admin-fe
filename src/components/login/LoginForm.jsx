@@ -4,6 +4,7 @@ import Input from "./Input";
 import classes from "./LoginForm.module.css";
 import AuthContext from "../../../store/auth-context";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -20,54 +21,28 @@ function LoginForm() {
     setPassword(event.target.value);
   }
 
-  function onSubmitHandler(event) {
+  async function onSubmitHandler(event) {
     event.preventDefault();
 
-    // Sementara
-    if (email.length > 8 && password.length > 8) {
-      // Dummy Token
-      const token = "X0X0"
-
-      Cookies.set("auth", token);
-      authCtx.login(token);
-      navigate("/dashboard");
-    } else {
-      console.log(email.length, password.length);
-      console.log("Masukin yg bener");
-    }
-    
-    /*
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+    if (email.length > 0 && password.length > 0) {
+      try {
+        const response = await axios.post("http://178.128.103.166/api/login", {
           email: email,
           password: password,
-        }),
-      });
+        });
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || "Login failed.");
+        const token = response.data.data.token;
+        Cookies.set("auth", token);
+        authCtx.login(token);
+        navigate("/dashboard");
+
+      } catch (error) {
+        // Handle error
+        console.error(error);
       }
-
-      const data = await response.json();
-      const token = data.token;
-
-      // set the httpOnly cookie
-      Cookies.set("auth", token, { httpOnly: true });
-
-      // update the auth context
-      authCtx.login(token);
-
-      navigate("/dashboard");
-    } catch (error) {
-      alert(error.message);
+    } else {
+      console.log("Error");
     }
-    */
   }
 
   return (

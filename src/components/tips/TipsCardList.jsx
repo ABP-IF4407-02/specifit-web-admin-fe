@@ -37,19 +37,27 @@ function TipsCardList({ cards }) {
         </div>
       </div>
       <div className={classes.cardContainer}>
-        {filteredCards.map((card) => (
-          <Link to={`${card.id}`} key={card.id} className={classes.cardLink}>
-            <div className={classes.card} key={card.id}>
-              <div className={classes.cardContent}>
-                <div className={classes.title}>{card.title}</div>
-                <div className={classes.description}>{card.author}</div>
+        {filteredCards.length > 0 ? (
+          filteredCards.map((card) => (
+            <Link
+              to={`${card._id}`}
+              key={card._id}
+              className={classes.cardLink}
+            >
+              <div className={classes.card} key={card._id}>
+                <div className={classes.cardContent}>
+                  <div className={classes.title}>{card.title}</div>
+                  <div className={classes.description}>{card.author}</div>
+                </div>
+                <div className={classes.cardAction}>
+                  <FiChevronRight style={{ color: "#2b2b2b" }} />
+                </div>
               </div>
-              <div className={classes.cardAction}>
-                <FiChevronRight style={{ color: "#2b2b2b" }} />
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))
+        ) : (
+          <p className={classes.description}>Belum ada Tips</p>
+        )}
       </div>
       <div className={classes.buttonContainer}>
         <button className={classes.addButton} onClick={onCreateHandler}>

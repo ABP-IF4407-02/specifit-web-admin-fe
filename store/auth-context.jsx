@@ -29,7 +29,6 @@ export function AuthContextProvider(props) {
   }
 
   function logoutHandler() {
-    // remove the httpOnly cookie
     Cookies.remove("auth");
     setToken(null);
     setIsLoggedIn(false);

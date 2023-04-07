@@ -77,8 +77,7 @@ function Dashboard() {
           ["program"]: response_3.data.data.total,
         });
       } catch (error) {
-        // Handle error
-        console.error(error);
+        alert(error.response.data.data.error);
       }
     }
     getCount();

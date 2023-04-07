@@ -33,16 +33,23 @@ function WorkoutForm({ id }) {
             },
           }
         );
-        if (Array.isArray(response.data.data.workoutLists[0])) {
-          setFormData(parseResponse(response.data.data));
-        } else {
-          setFormData(response.data.data);
-        }
-        console.log(response.data.data.img);
         setImagePreview(`http://178.128.103.166/${response.data.data.img}`);
+        let responseData = response.data.data;
+        delete responseData.img;
+        if (Array.isArray(responseData.workoutLists[0])) {
+          setFormData(parseResponse(responseData));
+        } else {
+          setFormData(responseData);
+        }
       } catch (error) {
         // Handle error
-        console.error(error);
+        alert(
+          error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.data &&
+            error.response.data.data.error
+        );
       }
     }
 
@@ -144,12 +151,17 @@ function WorkoutForm({ id }) {
         data,
         config
       );
-      console.log(response.data);
 
       alert("Create Workout Berhasil");
       navigate("/dashboard/workout");
     } catch (error) {
-      console.error(error);
+      alert(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.error
+      );
     }
   }
 
@@ -160,17 +172,22 @@ function WorkoutForm({ id }) {
       },
     };
     try {
-      const response = await axios.put(
-        `http://178.128.103.166/api/workout/edit/${id}`,
+      const response = await axios.post(
+        `http://178.128.103.166/api/workout/${id}`,
         data,
         config
       );
 
-      console.log(response.data);
       alert("Edit Workout Berhasil");
       navigate("/dashboard/workout");
     } catch (error) {
-      console.error(error);
+      alert(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.error
+      );
     }
   }
 
@@ -185,18 +202,22 @@ function WorkoutForm({ id }) {
         `http://178.128.103.166/api/workout/${id}`,
         config
       );
-      console.log(response.data);
       alert("Delete Workout Berhasil");
       navigate("/dashboard/workout");
     } catch (error) {
-      console.error(error);
+      alert(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.error
+      );
     }
   }
 
   function handleDeleteWorkout() {
     // Delete
     deleteWorkout();
-    // Navigate to home
     navigate("/dashboard/workout");
   }
 

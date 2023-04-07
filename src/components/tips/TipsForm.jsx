@@ -30,11 +30,20 @@ function TipsForm({ id }) {
             },
           }
         );
-        setFormData(response.data.data);
+
         setImagePreview(`http://178.128.103.166/${response.data.data.img}`);
+        let responseData = response.data.data;
+        delete responseData.img;
+        setFormData(responseData);
       } catch (error) {
         // Handle error
-        console.error(error);
+        alert(
+          error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.data &&
+            error.response.data.data.error
+        );
       }
     }
     if (id) {
@@ -62,11 +71,16 @@ function TipsForm({ id }) {
         data,
         config
       );
-      console.log(response.data);
       alert("Create Tips Berhasil");
       navigate("/dashboard/tips");
     } catch (error) {
-      console.error(error);
+      alert(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.error
+      );
     }
   }
 
@@ -77,16 +91,21 @@ function TipsForm({ id }) {
       },
     };
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         `http://178.128.103.166/api/tips/edit/${id}`,
         data,
         config
       );
-      console.log(response.data);
       alert("Edit Tips Berhasil");
       navigate("/dashboard/tips");
     } catch (error) {
-      console.error(error);
+      alert(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.error
+      );
     }
   }
 
@@ -101,11 +120,16 @@ function TipsForm({ id }) {
         `http://178.128.103.166/api/tips/edit/${id}`,
         config
       );
-      console.log(response.data);
       alert("Delete Tips Berhasil");
       navigate("/dashboard/tips");
     } catch (error) {
-      console.error(error);
+      alert(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.error
+      );
     }
   }
 
@@ -122,6 +146,7 @@ function TipsForm({ id }) {
   function handleSubmit(event) {
     event.preventDefault();
     const formDataObj = convertFormData(formData);
+    console.log(formData);
 
     if (id) {
       // Update

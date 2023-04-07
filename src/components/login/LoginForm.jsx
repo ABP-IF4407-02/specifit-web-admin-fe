@@ -24,24 +24,35 @@ function LoginForm() {
   async function onSubmitHandler(event) {
     event.preventDefault();
 
-    if (email.length > 0 && password.length > 0) {
+    if (
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) &&
+      password.length > 5
+    ) {
       try {
         const response = await axios.post("http://178.128.103.166/api/login", {
           email: email,
           password: password,
         });
 
-        const token = response.data.data.token;
-        Cookies.set("auth", token);
-        authCtx.login(token);
-        navigate("/dashboard");
-
+        if (response.data.data.user.role == 2) {
+          const token = response.data.data.token;
+          Cookies.set("auth", token);
+          authCtx.login(token);
+          navigate("/dashboard");
+        } else {
+          alert("Silahkan login dengan akun admin.");
+        }
       } catch (error) {
-        // Handle error
-        console.error(error);
+        alert(
+          error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.data &&
+            error.response.data.data.error
+        );
       }
     } else {
-      console.log("Error");
+      alert("Masukkan email dan password yang valid.");
     }
   }
 

@@ -23,7 +23,13 @@ function ProgramPage() {
         setProgramCards(response.data.data.data);
       } catch (error) {
         // Handle error
-        console.error(error);
+        alert(
+          error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.data &&
+            error.response.data.data.error
+        );
       }
     }
     getProgram();

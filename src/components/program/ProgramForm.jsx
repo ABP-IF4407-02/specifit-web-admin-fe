@@ -35,17 +35,25 @@ function ProgramForm({ id }) {
             },
           }
         );
-        if (Array.isArray(response.data.data.workouts[0])) {
-          setFormData(parseResponse(response.data.data));
-          setDayCount(response.data.data.workouts[0].length);
-        } else {
-          setFormData(response.data.data);
-          setDayCount(response.data.data.workouts.length);
-        }
         setImagePreview(`http://178.128.103.166/${response.data.data.img}`);
+        let responseData = response.data.data;
+        delete responseData.img;
+        if (Array.isArray(response.data.data.workouts[0])) {
+          setFormData(parseResponse(responseData));
+          setDayCount(responseData.workouts[0].length);
+        } else {
+          setFormData(responseData);
+          setDayCount(responseData.workouts.length);
+        }
       } catch (error) {
         // Handle error
-        console.error(error);
+        alert(
+          error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.data &&
+            error.response.data.data.error
+        );
       }
     }
 
@@ -59,7 +67,13 @@ function ProgramForm({ id }) {
         setWorkoutCards(response.data.data.data);
       } catch (error) {
         // Handle error
-        console.error(error);
+        alert(
+          error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.data &&
+            error.response.data.data.error
+        );
       }
     }
 
@@ -116,11 +130,16 @@ function ProgramForm({ id }) {
         data,
         config
       );
-      console.log(response.data);
       alert("Create Program Berhasil");
       navigate("/dashboard/program");
     } catch (error) {
-      console.error(error);
+      alert(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.error
+      );
     }
   }
 
@@ -131,16 +150,21 @@ function ProgramForm({ id }) {
       },
     };
     try {
-      const response = await axios.put(
-        `http://178.128.103.166/api/workoutprogram/edit/${id}`,
+      const response = await axios.post(
+        `http://178.128.103.166/api/workoutprogram/${id}`,
         data,
         config
       );
-      console.log(response.data);
       alert("Edit Program Berhasil");
       navigate("/dashboard/program");
     } catch (error) {
-      console.error(error);
+      alert(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.error
+      );
     }
   }
 
@@ -155,11 +179,16 @@ function ProgramForm({ id }) {
         `http://178.128.103.166/api/workoutprogram/${id}`,
         config
       );
-      console.log(response.data);
       alert("Delete Program Berhasil");
       navigate("/dashboard/program");
     } catch (error) {
-      console.error(error);
+      alert(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.error
+      );
     }
   }
 
@@ -176,7 +205,6 @@ function ProgramForm({ id }) {
   function handleSubmit(event) {
     event.preventDefault();
     const formDataObj = convertFormData(formData);
-    console.log(formData);
 
     if (id) {
       // Update
@@ -267,14 +295,17 @@ function ProgramForm({ id }) {
         </div>
         <div className={classes.formGroup}>
           <label htmlFor="ctgList">Kategori Program</label>
-          <input
-            type="text"
+          <select
             name="ctgList"
             id="ctgList"
             value={formData.ctgList}
             onChange={handleInputChange}
             required
-          />
+          >
+            <option value="">--Pilih Kategori--</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Fat Burn">Fat Burn</option>
+          </select>
         </div>
 
         {/* Dynamic form */}
@@ -356,7 +387,7 @@ function ProgramForm({ id }) {
           </div>
         ))}
         <div className={classes.formGroup}>
-          <label htmlFor="image">Olahraga Thumbnail</label>
+          <label htmlFor="img">Olahraga Thumbnail</label>
           <Dropzone
             onDrop={handleImageDrop}
             accept={{

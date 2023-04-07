@@ -14,13 +14,19 @@ function TipsPage() {
       try {
         const response = await axios.get("http://178.128.103.166/api/tips", {
           headers: {
-            Authorization: `Bearer ${token}`, // Include the Authorization header with the Bearer token
+            Authorization: `Bearer ${token}`,
           },
         });
         setTipsCards(response.data.data.data);
       } catch (error) {
         // Handle error
-        console.error(error);
+        alert(
+          error &&
+            error.response &&
+            error.response.data &&
+            error.response.data.data &&
+            error.response.data.data.error
+        );
       }
     }
     getTips();

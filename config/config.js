@@ -1,1 +1,1 @@
-export const ROOT = "http://specifit.duckdns.org/"
+export const ROOT = "https://specifit.duckdns.org/"

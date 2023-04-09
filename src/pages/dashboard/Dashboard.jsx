@@ -1,4 +1,4 @@
-import Sidebar from "../../components/ui/SideBar";
+import Sidebar from "../../components/ui/Sidebar";
 import TopBar from "../../components/ui/TopBar";
 import { useState, useEffect, useContext } from "react";
 import { Outlet, useLocation } from "react-router-dom";

@@ -6,6 +6,7 @@ import classes from "./Dashboard.module.css";
 import NavCard from "../../components/ui/NavCard";
 import AuthContext from "../../../store/auth-context";
 import axios from "axios";
+import { ROOT } from "../../../config/config";
 
 function Dashboard() {
   const location = useLocation();
@@ -48,27 +49,21 @@ function Dashboard() {
     async function getCount() {
       const token = authCtx.token;
       try {
-        const response = await axios.get("http://178.128.103.166/api/tips", {
+        const response = await axios.get(`${ROOT}api/tips`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        const response_2 = await axios.get(
-          "http://178.128.103.166/api/workout",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const response_3 = await axios.get(
-          "http://178.128.103.166/api/workoutprogram",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response_2 = await axios.get(`${ROOT}api/workout`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const response_3 = await axios.get(`${ROOT}api/workoutprogram`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setCount({
           ...count,

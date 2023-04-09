@@ -5,6 +5,7 @@ import classes from "./LoginForm.module.css";
 import AuthContext from "../../../store/auth-context";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { ROOT } from "../../../config/config";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function LoginForm() {
       password.length > 5
     ) {
       try {
-        const response = await axios.post("http://178.128.103.166/api/login", {
+        const response = await axios.post(`${ROOT}api/login`, {
           email: email,
           password: password,
         });

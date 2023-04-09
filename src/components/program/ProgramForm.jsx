@@ -6,6 +6,7 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../store/auth-context";
 import axios from "axios";
+import { ROOT } from "../../../config/config";
 
 function ProgramForm({ id }) {
   const [dayCount, setDayCount] = useState(0);
@@ -27,15 +28,12 @@ function ProgramForm({ id }) {
   useEffect(() => {
     async function getProgramById() {
       try {
-        const response = await axios.get(
-          `http://178.128.103.166/api/workoutprogram/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setImagePreview(`http://178.128.103.166/${response.data.data.img}`);
+        const response = await axios.get(`${ROOT}api/workoutprogram/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setImagePreview(`${ROOT}${response.data.data.img}`);
         let responseData = response.data.data;
         delete responseData.img;
         if (Array.isArray(response.data.data.workouts[0])) {
@@ -59,7 +57,7 @@ function ProgramForm({ id }) {
 
     async function getWorkouts() {
       try {
-        const response = await axios.get("http://178.128.103.166/api/workout", {
+        const response = await axios.get(`${ROOT}api/workout`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -126,7 +124,7 @@ function ProgramForm({ id }) {
     };
     try {
       const response = await axios.post(
-        "http://178.128.103.166/api/workoutprogram",
+        `${ROOT}api/workoutprogram`,
         data,
         config
       );
@@ -151,7 +149,7 @@ function ProgramForm({ id }) {
     };
     try {
       const response = await axios.post(
-        `http://178.128.103.166/api/workoutprogram/${id}`,
+        `${ROOT}api/workoutprogram/${id}`,
         data,
         config
       );
@@ -176,7 +174,7 @@ function ProgramForm({ id }) {
     };
     try {
       const response = await axios.delete(
-        `http://178.128.103.166/api/workoutprogram/${id}`,
+        `${ROOT}api/workoutprogram/${id}`,
         config
       );
       alert("Delete Program Berhasil");

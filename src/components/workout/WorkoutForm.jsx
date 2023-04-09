@@ -6,6 +6,7 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../../../store/auth-context";
+import { ROOT } from "../../../config/config";
 
 function WorkoutForm({ id }) {
   const navigate = useNavigate();
@@ -25,15 +26,12 @@ function WorkoutForm({ id }) {
   useEffect(() => {
     async function getWorkoutById() {
       try {
-        const response = await axios.get(
-          `http://178.128.103.166/api/workout/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setImagePreview(`http://178.128.103.166/${response.data.data.img}`);
+        const response = await axios.get(`${ROOT}api/workout/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setImagePreview(`${ROOT}${response.data.data.img}`);
         let responseData = response.data.data;
         delete responseData.img;
         if (Array.isArray(responseData.workoutLists[0])) {
@@ -146,11 +144,7 @@ function WorkoutForm({ id }) {
       },
     };
     try {
-      const response = await axios.post(
-        "http://178.128.103.166/api/workout",
-        data,
-        config
-      );
+      const response = await axios.post(`${ROOT}api/workout`, data, config);
 
       alert("Create Workout Berhasil");
       navigate("/dashboard/workout");
@@ -173,7 +167,7 @@ function WorkoutForm({ id }) {
     };
     try {
       const response = await axios.post(
-        `http://178.128.103.166/api/workout/${id}`,
+        `${ROOT}api/workout/${id}`,
         data,
         config
       );
@@ -198,10 +192,7 @@ function WorkoutForm({ id }) {
       },
     };
     try {
-      const response = await axios.delete(
-        `http://178.128.103.166/api/workout/${id}`,
-        config
-      );
+      const response = await axios.delete(`${ROOT}api/workout/${id}`, config);
       alert("Delete Workout Berhasil");
       navigate("/dashboard/workout");
     } catch (error) {

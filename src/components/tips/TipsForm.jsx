@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { IoTrash } from "react-icons/io5";
 import AuthContext from "../../../store/auth-context";
 import axios from "axios";
+import { ROOT } from "../../../config/config";
 
 function TipsForm({ id }) {
   const navigate = useNavigate();
@@ -22,16 +23,13 @@ function TipsForm({ id }) {
   useEffect(() => {
     async function getTipsById() {
       try {
-        const response = await axios.get(
-          `http://178.128.103.166/api/tips/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${ROOT}api/tips/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-        setImagePreview(`http://178.128.103.166/${response.data.data.img}`);
+        setImagePreview(`${ROOT}/${response.data.data.img}`);
         let responseData = response.data.data;
         delete responseData.img;
         setFormData(responseData);
@@ -66,11 +64,7 @@ function TipsForm({ id }) {
       },
     };
     try {
-      const response = await axios.post(
-        "http://178.128.103.166/api/tips",
-        data,
-        config
-      );
+      const response = await axios.post(`${ROOT}api/tips`, data, config);
       alert("Create Tips Berhasil");
       navigate("/dashboard/tips");
     } catch (error) {
@@ -92,7 +86,7 @@ function TipsForm({ id }) {
     };
     try {
       const response = await axios.post(
-        `http://178.128.103.166/api/tips/edit/${id}`,
+        `${ROOT}api/tips/edit/${id}`,
         data,
         config
       );
@@ -116,10 +110,7 @@ function TipsForm({ id }) {
       },
     };
     try {
-      const response = await axios.delete(
-        `http://178.128.103.166/api/tips/edit/${id}`,
-        config
-      );
+      const response = await axios.delete(`${ROOT}api/tips/edit/${id}`, config);
       alert("Delete Tips Berhasil");
       navigate("/dashboard/tips");
     } catch (error) {

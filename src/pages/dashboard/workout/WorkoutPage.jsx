@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import AuthContext from "../../../../store/auth-context";
 import axios from "axios";
 import LoadingSpinner from "../../../components/ui/LoadingSpinner";
+import { ROOT } from "../../../../config/config";
 
 function WorkoutPage() {
   const [workoutCards, setWorkoutCards] = useState(null);
@@ -12,7 +13,7 @@ function WorkoutPage() {
     async function getWorkouts() {
       const token = authCtx.token;
       try {
-        const response = await axios.get("http://178.128.103.166/api/workout", {
+        const response = await axios.get(`${ROOT}api/workout`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

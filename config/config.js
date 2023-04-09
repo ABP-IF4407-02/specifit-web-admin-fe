@@ -1,0 +1,1 @@
+export const ROOT = "http://specifit.duckdns.org/"

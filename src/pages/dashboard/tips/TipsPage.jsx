@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../../store/auth-context";
 import axios from "axios";
 import LoadingSpinner from "../../../components/ui/LoadingSpinner";
+import { ROOT } from "../../../../config/config";
 
 function TipsPage() {
   const [tipsCards, setTipsCards] = useState(null);
@@ -12,7 +13,7 @@ function TipsPage() {
     async function getTips() {
       const token = authCtx.token;
       try {
-        const response = await axios.get("http://178.128.103.166/api/tips", {
+        const response = await axios.get(`${ROOT}api/tips`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

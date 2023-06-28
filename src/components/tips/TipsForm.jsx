@@ -29,7 +29,7 @@ function TipsForm({ id }) {
           },
         });
 
-        setImagePreview(`${ROOT}/${response.data.data.img}`);
+        setImagePreview(`${ROOT}${response.data.data.img}`);
         let responseData = response.data.data;
         delete responseData.img;
         setFormData(responseData);
